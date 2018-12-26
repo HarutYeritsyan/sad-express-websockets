@@ -39,8 +39,10 @@ server.listen(PORT, HOST, function () {
 });
 
 // Server state
-var messages = [{ msg: 'primer mensaje', from: 'Foreador', ts: new Date() },
-{ msg: 'SEGUNDO mensaje', from: 'Foreador', ts: new Date() }];
+var messages = [
+    { msg: 'primer mensaje', from: 'Foreador', ts: new Date() },
+    { msg: 'SEGUNDO mensaje', from: 'Foreador', ts: new Date() }
+];
 
 // Server functions
 getMessageList = function () {
