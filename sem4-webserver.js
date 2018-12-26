@@ -10,14 +10,22 @@ app.get('/', function (req, res) {
 
 io.on('connection', function (sock) {
     console.log("Event: client connected");
+    console.log('Messages: ', JSON.stringify(messages, null, 2));
     sock.on('disconnect', function () {
         console.log('Event: client disconnected');
     });
 
-    sock.on('get message list', function () {
+    sock.on('get message list', function (cb) {
         console.log("Event: get message list: ");
         getMessageList(function (ml) {
-            sock.emit('message list', JSON.stringify(ml));
+            sock.emit('message list', JSON.stringify(ml), cb);
+        });
+    });
+
+    sock.on('post message', function (message, from) {
+        console.log("Event: post message: ");
+        postMessage(message, from, function (newMessage) {
+            sock.emit('message posted', JSON.stringify(newMessage));
         });
     });
 });
@@ -36,4 +44,9 @@ getMessageList = function (cb) {
     cb(messages);
 }
 
+postMessage = function (message, from, cb) {
+    var newMessage = { msg: message, from: from, ts: new Date() };
+    messages.push(newMessage);
+    cb(newMessage);
+}
 

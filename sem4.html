@@ -6,10 +6,23 @@
 	<script>
 		var socket = io();
 
-		socket.on('message list', function (data) {
+		// Moved socket commands to functions
+		postMessage = function (message, from) {
+			socket.emit('post message', message, from);
+		}
+
+		// Moved socket commands to functions
+		getMessageList = function (cb) {
+			socket.emit('get message list', cb);
+		}
+
+		socket.on('message list', function (data, cb) {
 
 			console.log(data);
 			var ml = JSON.parse(data);
+			
+			// Clean message list before refreshing it
+			$('#ml').empty();
 
 			for (var i in ml) {
 				ml[i].ts = new Date(ml[i].ts);
@@ -19,11 +32,25 @@
 
 				$('#ml').append($('<li>').html(item));
 			}
+
+			// Callback for functions chaining after socket response
+			if (cb) {
+				cb();
+			}
 		});
 
-		$(function () {
-			socket.emit('get message list');
+		socket.on('message posted', function (data) {
+			console.log(data);
+			var newMessage = JSON.parse(data);
+			console.log('message posted: ', newMessage);
+
+			getMessageList();
 		});
+
+		getMessageList(function () {
+			postMessage('Hola Mundo', 'mudito');
+		});		
+
 	</script>
 
 <body>
