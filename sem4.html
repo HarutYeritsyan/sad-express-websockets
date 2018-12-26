@@ -39,11 +39,7 @@
 			}
 		});
 
-		socket.on('message posted', function (data) {
-			console.log(data);
-			var newMessage = JSON.parse(data);
-			console.log('message posted: ', newMessage);
-
+		socket.on('message posted', function () {
 			getMessageList();
 		});
 

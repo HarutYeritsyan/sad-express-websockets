@@ -23,9 +23,9 @@ io.on('connection', function (sock) {
     });
 
     sock.on('post message', function (message, from) {
-        console.log("Event: post message: ");
-        postMessage(message, from, function (newMessage) {
-            sock.emit('message posted', JSON.stringify(newMessage));
+        console.log("Event: post message");
+        postMessage(message, from, function () {
+            sock.emit('message posted');
         });
     });
 });
