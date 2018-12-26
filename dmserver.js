@@ -45,8 +45,8 @@ var messages = [
 ];
 
 // Server functions
-getMessageList = function (cb) {
-    cb(messages);
+getMessageList = function () {
+    return messages;
 }
 
 // Posts a new message. Returns true.
