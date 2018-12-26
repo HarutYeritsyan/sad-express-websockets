@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "description": "SAD Seminars Act1",
     "scripts": {
-        "webserver": "nodemon webserver.js",
+        "webserver": "nodemon sem4-webserver.js",
         "dmserver": "nodemon dmserver.js"
     },
     "dependencies": {
