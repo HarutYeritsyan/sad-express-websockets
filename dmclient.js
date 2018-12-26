@@ -22,6 +22,10 @@ client.on('data', function (data) {
 			console.log('We received the message list');
 			ml_callback(reply.obj);
 			break;
+		case 'post message':
+			console.log('We sent a message');
+			ml_callback(reply.obj);
+			break;
 		default:
 			console.log("Panic: we got this: " + reply.what);
 	}
@@ -34,6 +38,9 @@ function getMessageList(cb) {
 }
 
 function postMessage(msg, from, cb) {
+	var cmd = { what: 'post message', msg: msg, from: from };
+	ml_callback = cb;
+	client.write(JSON.stringify(cmd));
 }
 
 // Add a 'close' event handler for the client socket
