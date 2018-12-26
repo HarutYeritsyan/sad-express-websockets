@@ -1,0 +1,9 @@
+{
+    "name": "sad-activity-1",
+    "version": "0.0.1",
+    "description": "SAD Seminars Act1",
+    "dependencies": {
+        "express": "4.8.0",
+        "socket.io": "1.0.2"
+    }
+}
