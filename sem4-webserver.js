@@ -31,8 +31,8 @@ var messages = [
     { msg: 'SEGUNDO mensaje', from: 'Foreador', ts: new Date() }
 ];
 
-getMessageList = function () {
-    return messages;
+getMessageList = function (cb) {
+    cb(messages);
 }
 
 
