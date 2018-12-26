@@ -4,7 +4,8 @@
     "description": "SAD Seminars Act1",
     "scripts": {
         "webserver": "nodemon sem4-webserver.js",
-        "dmserver": "nodemon dmserver.js"
+        "dmserver": "nodemon dmserver.js",
+        "dmclient": "nodemon dmclient.js"
     },
     "dependencies": {
         "express": "4.8.0",

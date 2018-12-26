@@ -8,7 +8,13 @@ client.connect(PORT, HOST, function () {
 	// Write the command to the server 
 	getMessageList(function (ml) {
 		console.log("here it is:")
-		console.log(JSON.stringify(ml));
+		console.log(JSON.stringify(ml, null, 2));
+		postMessage('Hola Mundo', 'mudito', function () {
+			getMessageList(function (ml2) {
+				console.log("here it is:")
+				console.log(JSON.stringify(ml2, null, 2));
+			});
+		});
 	});
 });
 
