@@ -5,15 +5,15 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		var socket = io();
-
-		// Moved socket commands to functions
-		postMessage = function (message, from) {
-			socket.emit('post message', message, from);
-		}
-
+		
 		// Moved socket commands to functions
 		getMessageList = function (cb) {
 			socket.emit('get message list', cb);
+		}
+
+		// Moved socket commands to functions
+		postMessage = function (message, from, cb) {
+			socket.emit('post message', message, from, cb);
 		}
 
 		socket.on('message list', function (data, cb) {
@@ -39,12 +39,16 @@
 			}
 		});
 
-		socket.on('message posted', function () {
-			getMessageList();
+		socket.on('message posted', function (cb) {
+			if (cb) {
+				cb();
+			}
 		});
 
 		getMessageList(function () {
-			postMessage('Hola Mundo', 'mudito');
+			postMessage('Hola Mundo', 'mudito', function () {
+				getMessageList();
+			});
 		});		
 
 	</script>

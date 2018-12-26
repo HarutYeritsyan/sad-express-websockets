@@ -22,10 +22,10 @@ io.on('connection', function (sock) {
         });
     });
 
-    sock.on('post message', function (message, from) {
+    sock.on('post message', function (message, from, cb) {
         console.log("Event: post message");
         postMessage(message, from, function () {
-            sock.emit('message posted');
+            sock.emit('message posted', cb);
         });
     });
 });
