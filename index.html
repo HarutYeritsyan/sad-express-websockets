@@ -71,13 +71,17 @@
   <script>
     var socket = io();
     $('#nick-form').submit(function () {
-      socket.emit('chat message', $('#m').val());
-      $('#m').val('');
+      if ($('#nick').val()) {
+        // TODO: Set nickname
+        $('#nick').val('');
+      }
       return false;
     });
     $('#chat-form').submit(function () {
-      socket.emit('chat message', $('#m').val());
-      $('#m').val('');
+      if ($('#m').val()) {
+        socket.emit('chat message', $('#m').val());
+        $('#m').val('');
+      }
       return false;
     });
     socket.on('chat message', function (msg) {
