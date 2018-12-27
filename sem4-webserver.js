@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var dm = require('./dmclient.js');
 
 // serve static html files
 app.get('/', function (req, res) {
@@ -17,14 +18,14 @@ io.on('connection', function (sock) {
 
     sock.on('get message list', function (cb) {
         console.log("Event: get message list: ");
-        getMessageList(function (ml) {
+        dm.getMessageList(function (ml) {
             sock.emit('message list', JSON.stringify(ml), cb);
         });
     });
 
     sock.on('post message', function (message, from, cb) {
         console.log("Event: post message");
-        postMessage(message, from, function () {
+        dm.postMessage(message, from, function () {
             sock.emit('message posted', cb);
         });
     });
@@ -39,14 +40,4 @@ var messages = [
     { msg: 'primer mensaje', from: 'Foreador', ts: new Date() },
     { msg: 'SEGUNDO mensaje', from: 'Foreador', ts: new Date() }
 ];
-
-getMessageList = function (cb) {
-    cb(messages);
-}
-
-postMessage = function (message, from, cb) {
-    var newMessage = { msg: message, from: from, ts: new Date() };
-    messages.push(newMessage);
-    cb(newMessage);
-}
 
