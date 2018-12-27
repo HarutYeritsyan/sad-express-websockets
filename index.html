@@ -59,10 +59,10 @@
 <body>
   <ul id="messages"></ul>
   <div class="forms">
-    <form id="nick-input" action="">
+    <form id="nick-form" action="">
       <input id="nick" autocomplete="off" /><button>Nickname</button>
     </form>
-    <form id="chat-input" action="">
+    <form id="chat-form" action="">
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
   </div>
@@ -70,12 +70,12 @@
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
   <script>
     var socket = io();
-    $('#nick-input').submit(function () {
+    $('#nick-form').submit(function () {
       socket.emit('chat message', $('#m').val());
       $('#m').val('');
       return false;
     });
-    $('#chat-input').submit(function () {
+    $('#chat-form').submit(function () {
       socket.emit('chat message', $('#m').val());
       $('#m').val('');
       return false;
