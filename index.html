@@ -59,6 +59,10 @@
       background: #eee;
     }
 
+    .own-message {
+      text-align: right;
+    }
+
     .nickname {
       font-weight: 600;
     }
@@ -112,7 +116,7 @@
       $('#chat-form').submit(function () {
         var msg = $('#m').val();
         if (msg && msg.trim() != '') {
-          $('#messages').append($('<li>').append($('<div class="nickname">').text(nickname)).append($('<div>').text(msg)));
+          $('#messages').append($('<li class="own-message">').append($('<div class="nickname">').text(nickname)).append($('<div>').text(msg)));
           socket.emit('chat message', msg, nickname);
           $('#m').val('');
         }
