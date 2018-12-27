@@ -59,6 +59,10 @@
       background: #eee;
     }
 
+    .nickname {
+      font-weight: 600;
+    }
+
     .disabled {
       display: none;
     }
@@ -96,6 +100,7 @@
     $('#nick-form').submit(function () {
       var nick = $('#nick').val();
       if (nick && nick.trim() != '') {
+        nickname = nick.trim();
         $('#current-nickname').text(nick.trim());
         $('#nick').val('');
         enableChat();
@@ -105,13 +110,13 @@
     $('#chat-form').submit(function () {
       var msg = $('#m').val();
       if (msg && msg.trim() != '') {
-        socket.emit('chat message', msg);
+        socket.emit('chat message', msg, nickname);
         $('#m').val('');
       }
       return false;
     });
-    socket.on('chat message', function (msg) {
-      $('#messages').append($('<li>').text(msg));
+    socket.on('chat message', function (msg, nickname) {
+      $('#messages').append($('<li>').append($('<div class="nickname">').text(nickname)).append($('<div>').text(msg)));
     });
     socket.on('system message', function (msg) {
       $('#messages').append($('<li style="color:#999">').text(msg));
