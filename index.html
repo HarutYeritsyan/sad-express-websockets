@@ -78,16 +78,17 @@
     var socket = io();
     var nickname = '';
     $('#nick-form').submit(function () {
-      if ($('#nick').val()) {
-        nickname = $('#nick').val();
-        $('#current-nickname').text(nickname);
+      var nick = $('#nick').val();
+      if (nick && nick.trim() != '') {
+        $('#current-nickname').text(nick.trim());
         $('#nick').val('');
       }
       return false;
     });
     $('#chat-form').submit(function () {
-      if ($('#m').val()) {
-        socket.emit('chat message', $('#m').val());
+      var msg = $('#m').val();
+      if (msg && msg.trim() != '') {
+        socket.emit('chat message', msg);
         $('#m').val('');
       }
       return false;
