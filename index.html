@@ -20,6 +20,11 @@
       width: 100%;
     }
 
+    #current-nickname {
+      padding: 3px;
+      border-top: 1px solid #ccc;
+    }
+
     form {
       background: #000;
       padding: 3px;
@@ -59,6 +64,7 @@
 <body>
   <ul id="messages"></ul>
   <div class="forms">
+    <div id="current-nickname"></div>
     <form id="nick-form" action="">
       <input id="nick" autocomplete="off" /><button>Nickname</button>
     </form>
@@ -70,9 +76,11 @@
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
   <script>
     var socket = io();
+    var nickname = '';
     $('#nick-form').submit(function () {
       if ($('#nick').val()) {
-        // TODO: Set nickname
+        nickname = $('#nick').val();
+        $('#current-nickname').text(nickname);
         $('#nick').val('');
       }
       return false;
