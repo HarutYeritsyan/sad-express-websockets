@@ -9,13 +9,15 @@ app.get('/', function (req, res) {
 io.on('connection', function (socket) {
   console.log('A user connected');
   io.emit('system message', 'A user connected');
+  socket.emit('set user id', socket.id);
+
   socket.on('disconnect', function () {
     console.log('User disconnected');
     io.emit('system message', 'User disconnected');
   });
   socket.on('chat message', function (msg, nickname) {
     console.log('message: ' + msg + ' from :' + nickname);
-    io.emit('chat message', msg, nickname);
+    io.emit('chat message', msg, nickname, socket.id);
   });
 });
 
