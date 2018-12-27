@@ -58,17 +58,23 @@
     #messages li:nth-child(odd) {
       background: #eee;
     }
+
+    .disabled {
+      display: none;
+    }
   </style>
 </head>
 
 <body>
   <ul id="messages"></ul>
   <div class="forms">
-    <div id="current-nickname"></div>
+    <div id="current-nickname">
+      Set Your Nickname:
+    </div>
     <form id="nick-form" action="">
       <input id="nick" autocomplete="off" /><button>Nickname</button>
     </form>
-    <form id="chat-form" action="">
+    <form id="chat-form" class="disabled" action="">
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
   </div>
@@ -77,11 +83,22 @@
   <script>
     var socket = io();
     var nickname = '';
+    var chatInputEnabled = false;
+
+    enableChat = function () {
+      if (!chatInputEnabled) {
+        chatInputEnabled = true;
+        $('#chat-form').removeClass('disabled');
+        $('#nick-form').addClass('disabled');
+      }
+    }
+
     $('#nick-form').submit(function () {
       var nick = $('#nick').val();
       if (nick && nick.trim() != '') {
         $('#current-nickname').text(nick.trim());
         $('#nick').val('');
+        enableChat();
       }
       return false;
     });
