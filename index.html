@@ -14,11 +14,15 @@
       font: 13px Helvetica, Arial;
     }
 
+    .forms {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
     form {
       background: #000;
       padding: 3px;
-      position: fixed;
-      bottom: 0;
       width: 100%;
     }
 
@@ -54,14 +58,24 @@
 
 <body>
   <ul id="messages"></ul>
-  <form action="">
-    <input id="m" autocomplete="off" /><button>Send</button>
-  </form>
+  <div class="forms">
+    <form id="nick-input" action="">
+      <input id="nick" autocomplete="off" /><button>Nickname</button>
+    </form>
+    <form id="chat-input" action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+  </div>
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
   <script>
     var socket = io();
-    $('form').submit(function () {
+    $('#nick-input').submit(function () {
+      socket.emit('chat message', $('#m').val());
+      $('#m').val('');
+      return false;
+    });
+    $('#chat-input').submit(function () {
       socket.emit('chat message', $('#m').val());
       $('#m').val('');
       return false;
