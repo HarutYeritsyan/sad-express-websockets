@@ -5,17 +5,6 @@ var client = new net.Socket();
 
 client.connect(PORT, HOST, function () {
 	console.log('CONNECTED TO: ' + HOST + ':' + PORT);
-	// Write the command to the server 
-	getMessageList(function (ml) {
-		console.log("here it is:")
-		console.log(JSON.stringify(ml, null, 2));
-		postMessage('Hola Mundo', 'mudito', function () {
-			getMessageList(function (ml2) {
-				console.log("here it is:")
-				console.log(JSON.stringify(ml2, null, 2));
-			});
-		});
-	});
 });
 
 var ml_callback;
@@ -37,13 +26,13 @@ client.on('data', function (data) {
 	}
 });
 
-function getMessageList(cb) {
+exports.getMessageList = function (cb) {
 	var cmd = { what: 'get message list' };
 	ml_callback = cb;
 	client.write(JSON.stringify(cmd));
 }
 
-function postMessage(msg, from, cb) {
+exports.postMessage = function (msg, from, cb) {
 	var cmd = { what: 'post message', msg: msg, from: from };
 	ml_callback = cb;
 	client.write(JSON.stringify(cmd));
