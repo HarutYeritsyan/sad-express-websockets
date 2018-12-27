@@ -69,6 +69,9 @@
     socket.on('chat message', function (msg) {
       $('#messages').append($('<li>').text(msg));
     });
+    socket.on('system message', function (msg) {
+      $('#messages').append($('<li style="color:#999">').text(msg));
+    });
   </script>
 </body>
 
